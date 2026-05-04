@@ -10,13 +10,13 @@ und der Moeglichkeit, `.zr`-Dateien auszufuehren.
 Interaktiven Modus starten:
 
 ```bash
-/home/friedrich/Dokumente/Python/Python_main-env/bin/python /home/friedrich/Dokumente/Python/EigeneProgrammiersprache/main.py
+python3 Zyro/main.py
 ```
 
 Eine `.zr`-Datei ausfuehren:
 
 ```bash
-/home/friedrich/Dokumente/Python/Python_main-env/bin/python /home/friedrich/Dokumente/Python/EigeneProgrammiersprache/main.py Skript.zr
+python3 Zyro/main.py Skript.zr
 ```
 
 ### Windows
@@ -24,19 +24,13 @@ Eine `.zr`-Datei ausfuehren:
 Interaktiven Modus starten:
 
 ```bat
-python main.py
+python3 main.py
 ```
 
 Eine `.zr`-Datei ausfuehren:
 
 ```bat
-python main.py Skript.zr
-```
-
-Mit der vorhandenen Batch-Datei kann eine `.zr`-Datei ebenfalls gestartet werden:
-
-```bat
-windows_start.bat Skript.zr
+python3 main.py Skript.zr
 ```
 
 ## Abhaengigkeiten
