@@ -1,5 +1,7 @@
-# Zyro
-![Logo](../icon.png)
+<div align="center">
+  <img src="assets/icon.png" width="300">
+  <h1 style="font-size: 48px;">Zyro</h1>
+</div>
 
 Zyro ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
 und der Moeglichkeit, `.zr`-Dateien auszufuehren.
