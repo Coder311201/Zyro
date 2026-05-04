@@ -1,0 +1,40 @@
+> Zyro Showcase
+> Dieses Skript zeigt die aktuellen Grundfunktionen von Zyro.
+
+sage -f b ==============================
+sage -f b        Willkommen bei Zyro
+sage -f b ==============================
+sage -n
+
+sage Dieses Skript nutzt Text, Farben, Kommentare, Leerzeilen und Wartezeiten.
+warte -t -ms_mode 500
+sage -n
+
+sage -f g Schritt 1: Normale Ausgabe funktioniert.
+warte -t -ms_mode 400
+sage -f b Schritt 2: Farben machen Ausgaben uebersichtlicher.
+warte -t -ms_mode 400
+sage -f r Schritt 3: Rot eignet sich fuer Warnungen oder Fehler.
+warte -t -ms_mode 400
+sage -n
+
+
+> Die naechste Zeile ist nur Dekoration.
+sage --------------------------------
+sage Jetzt noch ein Countdown:
+sage -f b 5
+warte -t 1
+sage -f b 4
+warte -t 1
+sage -f b 3
+warte -t 1
+sage -f b 2
+warte -t 1
+sage -f b 1
+warte -t 1
+sage --------------------------------
+sage -n
+
+sage -f g Showcase abgeschlossen.
+sage Bis zum naechsten Lauf!
+
