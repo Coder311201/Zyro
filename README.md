@@ -24,13 +24,13 @@ python3 Zyro/main.py Skript.zr
 Interaktiven Modus starten:
 
 ```bat
-python3 main.py
+python3 Zyro/main.py
 ```
 
 Eine `.zr`-Datei ausfuehren:
 
 ```bat
-python3 main.py Skript.zr
+python3 Zyro/main.py Skript.zr
 ```
 
 ## Abhaengigkeiten
