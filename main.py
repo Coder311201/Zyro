@@ -8,7 +8,6 @@ import functions
 
 class main_app:
     def __init__(self):
-        self.Version = "2.0.8"
         print('Gebe "?hilfe" oder ? ein wenn du hilfe brauchst')
         self.Interface = interface.Interface(False)
 
