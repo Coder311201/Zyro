@@ -1,4 +1,5 @@
 # Zyro
+![Logo](../icon.png)
 
 Zyro ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
 und der Moeglichkeit, `.zr`-Dateien auszufuehren.
