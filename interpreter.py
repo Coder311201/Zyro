@@ -1,0 +1,156 @@
+import functions
+import sys
+
+
+class Interpreter:
+    def __init__(self, debug: bool = True):
+        self.functions = functions.functions(debug)
+        if debug:
+            print("Interpreter is running")
+
+    def execute(self, command: str):
+        command_parts = command.split()
+        if not command_parts:
+            return
+
+        cmd = command_parts[0]
+
+        if cmd == "?hilfe" or cmd == "?":
+            print(
+                "Willkommen im Zyro-Hilfsmenü\n"
+                "Drücke ^C zum Beenden\n\n"
+                "Befehle:\n"
+                "  ?hilfe oder ?\n"
+                "    Zeigt diese Hilfe an.\n\n"
+                "  sage <text>\n"
+                "    Gibt den angegebenen Text aus.\n\n"
+                "  sage -f <farbe> <text>\n"
+                "    Gibt den Text farbig aus.\n"
+                "    Farben: r = rot, g = gruen, b = blau\n\n"
+                "  sage -n\n"
+                "    Gibt eine Leerzeile aus.\n\n"
+                "  run -p <datei.zr>\n"
+                "    Fuehrt eine Zyro-Datei aus.\n\n"
+                "  warte\n"
+                "    Wartet 10 Sekunden.\n\n"
+                "  warte -t <sekunden>\n"
+                "    Wartet die angegebene Anzahl Sekunden.\n\n"
+                "  warte -t -ms_mode <millisekunden>\n"
+                "    Wartet die angegebene Anzahl Millisekunden.\n\n"
+                "  > <kommentar>\n"
+                "    Ignoriert die Zeile als Kommentar.\n"
+            )
+
+        elif cmd == "sage":
+            if len(command_parts) < 2:
+                self.functions.ausgabe("Keine Argumente!", "r")
+                print("Fuehre ?hilfe oder sage -h aus wenn du hilfe brauchst")
+                return
+            if command_parts[1] == "-f":
+                if len(command_parts) < 4:
+                    self.functions.ausgabe("Keine Farbe oder Text!", "r")
+                    print("Fuehre ?hilfe oder sage -h aus wenn du hilfe brauchst")
+                    return
+                text = " ".join(command_parts[3:])
+                self.functions.ausgabe(text, command_parts[2])
+            elif command_parts[1] == "-h":
+                print(
+                    "Hilfe fuer sage\n"
+                    "Verwendung:\n"
+                    "  sage <text>\n"
+                    "  sage -f <farbe> <text>\n"
+                    "  sage -n\n\n"
+                    "Farben:\n"
+                    "  r = rot\n"
+                    "  g = gruen\n"
+                    "  b = blau"
+                )
+
+            elif command_parts[1] == "-n":
+                print()
+
+            else:
+                text = " ".join(command_parts[1:])
+                self.functions.ausgabe(text, "w")
+
+        elif cmd == "run":
+            if len(command_parts) < 2:
+                self.functions.ausgabe("Keine Argumente!", "r")
+                print("Fuehre ?hilfe oder run -h aus wenn du hilfe brauchst")
+                return
+
+            if command_parts[1] == "-p":
+                if len(command_parts) < 3:
+                    self.functions.ausgabe("Kein Pfad angegeben!", "r")
+                    print("Fuehre ?hilfe oder run -h aus wenn du hilfe brauchst")
+                    return
+                self.functions.compile(command_parts[2])
+            elif command_parts[1] == "-h":
+                print(
+                    "Hilfe fuer run\n"
+                    "Verwendung:\n"
+                    "  run -p <datei.zr>\n\n"
+                    "Beispiel:\n"
+                    "  run -p Skript.zr"
+                )
+
+            else:
+                self.functions.ausgabe("Keine Argumente!", "r")
+                print("Fuehre ?hilfe oder run -h aus wenn du hilfe brauchst")
+                return
+
+        elif cmd == "exit":
+            print("Programm wird beendet.")
+            sys.exit()
+
+        elif cmd == ">":
+            return
+
+        elif cmd == "warte":
+            try:
+                if len(command_parts) < 2:
+                    self.functions.wait(10, False)
+                elif command_parts[1] == "-h":
+                    print(
+                        "Hilfe fuer warte\n"
+                        "Verwendung:\n"
+                        "  warte\n"
+                        "  warte -t <sekunden>\n"
+                        "  warte -t -ms_mode <millisekunden>\n\n"
+                        "Beispiele:\n"
+                        "  warte\n"
+                        "  warte -t 2\n"
+                        "  warte -t -ms_mode 500"
+                    )
+                elif command_parts[1] == "-t":
+                    mi = True if command_parts[2] == "-ms_mode" else False
+
+                    if len(command_parts) < 3 and (
+                        True if not mi else False if len(command_parts) < 4 else True
+                    ):
+                        self.functions.ausgabe("Keine Argumente!", "r")
+                        print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
+                        return
+                    elif int(command_parts[3] if mi else command_parts[2]) <= 0:
+                        self.functions.ausgabe(
+                            "Bitte gültige positive Ganzzahl eingeben!", "r"
+                        )
+                        print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
+                        return
+
+                    self.functions.wait(
+                        int(command_parts[3] if mi else command_parts[2]), mi
+                    )
+                else:
+                    self.functions.ausgabe("Falsche Argumente!", "r")
+                    print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
+                    return
+            except IndexError:
+                self.functions.ausgabe("Keine Argumente!", "r")
+                print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
+            except ValueError:
+                self.functions.ausgabe("Bitte gültige positive Ganzzahl eingeben!", "r")
+                print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
+
+        else:
+            print("Befehl nicht gefunden")
