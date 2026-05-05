@@ -1,8 +1,8 @@
-> Zora Showcase
-> Dieses Skript zeigt die aktuellen Grundfunktionen von Zora.
+> Zyro Showcase
+> Dieses Skript zeigt die aktuellen Grundfunktionen von Zyro.
 
 sage -f b ==============================
-sage -f b        Willkommen bei Zora
+sage -f b        Willkommen bei Zyro
 sage -f b ==============================
 sage -n
 
