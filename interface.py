@@ -7,6 +7,7 @@ class Interface:
         self.executer = interpreter.Interpreter(debug)
         if debug:
             print("Interface is running")
+            
 
     def run(self):
         print("Interface is started")
