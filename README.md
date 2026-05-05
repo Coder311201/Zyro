@@ -1,9 +1,9 @@
 <div align="center">
   <img src="assets/icon.png" width="300">
-  <h1 style="font-size: 48px;">Zyro</h1>
+  <h1 style="font-size: 48px;">Zyro-code</h1>
 </div>
 
-Zyro ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
+Zyro-code ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
 und der Möglichkeit, `.zr`-Dateien auszuführen.
 
 ## Starten
@@ -13,13 +13,13 @@ und der Möglichkeit, `.zr`-Dateien auszuführen.
 Interaktiven Modus starten:
 
 ```bash
-python3 Zyro/main.py
+python3 Zyro-code/main.py
 ```
 
 Eine `.zr`-Datei auszuführen:
 
 ```bash
-python3 Zyro/main.py Skript.zr
+python3 Zyro-code/main.py Skript.zr
 ```
 
 ### Windows
@@ -27,13 +27,13 @@ python3 Zyro/main.py Skript.zr
 Interaktiven Modus starten:
 
 ```bat
-python3 Zyro/main.py
+python3 Zyro-code/main.py
 ```
 
 Eine `.zr`-Datei auszuführen:
 
 ```bat
-python3 Zyro/main.py Skript.zr
+python3 Zyro-code/main.py Skript.zr
 ```
 
 ## Abhängigkeiten
@@ -73,7 +73,7 @@ Leerzeile ausgeben:
 sage -n
 ```
 
-### Eine Zyro-Datei aus dem Live-Modus ausfuehren:
+### Eine 'Zyro-code'-Datei aus dem Live-Modus ausfuehren:
 
 ```text
 run -p Skript.zr
@@ -115,7 +115,7 @@ exit
 
 ```text
 > Kleines Beispielprogramm
-sage Hallo aus Zyro!
+sage Hallo aus Zyro-code!
 sage -n
 sage -f g Das ist grün.
 warte -t 1
