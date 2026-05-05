@@ -8,7 +8,6 @@ class Interface:
         if debug:
             print("Interface is running")
             
-
     def run(self):
         print("Interface is started")
         try:
