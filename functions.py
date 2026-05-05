@@ -6,7 +6,7 @@ import time
 
 class functions:
     def __init__(self, debug: bool = True):
-        init()
+        init()        
         if debug:
             print("Functions loaded")
 

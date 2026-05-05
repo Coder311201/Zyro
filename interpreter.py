@@ -5,10 +5,15 @@ import sys
 class Interpreter:
     def __init__(self, debug: bool = True):
         self.functions = functions.functions(debug)
+        self.vars = {}
         if debug:
             print("Interpreter is running")
 
     def execute(self, command: str):
+        for var in self.vars:
+            if var in command:
+                command = command.replace(var, str(self.vars.get(var, None)))
+
         command_parts = command.split()
         if not command_parts:
             return
@@ -40,6 +45,14 @@ class Interpreter:
                 "  > <kommentar>\n"
                 "    Ignoriert die Zeile als Kommentar.\n"
             )
+
+        elif "=>" in command_parts:
+            if command_parts.index("=>") != 0:
+                var_name = " ".join(command_parts[: command_parts.index("=>")])
+                var_value = " ".join(command_parts[command_parts.index("=>") + 1:])
+                self.vars[var_name] = var_value
+            else:
+                self.functions.ausgabe("Ungültiger Variablename!", "r")
 
         elif cmd == "sage":
             if len(command_parts) < 2:
