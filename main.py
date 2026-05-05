@@ -2,10 +2,6 @@ import sys
 import interface
 import functions
 
-# Formatieren: black Zyro/
-#KI: codex resume 019dee38-dbaa-7ea1-aba2-c0a5d68ecf4c
-
-
 class main_app:
     def __init__(self):
         print('Gebe "?hilfe" oder ? ein wenn du hilfe brauchst')
