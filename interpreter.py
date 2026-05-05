@@ -44,8 +44,8 @@ class Interpreter:
                 "    Wartet die angegebene Anzahl Millisekunden.\n\n"
                 "  > <kommentar>\n"
                 "    Ignoriert die Zeile als Kommentar.\n" \
-                "<var_name> => <var_value>\n" \
-                "Definiert eine Variable mit dem angegebenen Namen und Wert."
+                "  <var_name> => <var_value>\n" \
+                "  Definiert eine Variable mit dem angegebenen Namen und Wert."
             )
 
         elif "=>" in command_parts:
