@@ -1,9 +1,9 @@
 <div align="center">
   <img src="assets/icon.png" width="300">
-  <h1 style="font-size: 48px;">Zyro-code</h1>
+  <h1 style="font-size: 48px;">Zora</h1>
 </div>
 
-Zyro-code ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
+Zora ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
 und der Möglichkeit, `.zr`-Dateien auszuführen.
 
 ## Starten
@@ -13,13 +13,13 @@ und der Möglichkeit, `.zr`-Dateien auszuführen.
 Interaktiven Modus starten:
 
 ```bash
-python3 Zyro-code/main.py
+python3 Zora/main.py
 ```
 
 Eine `.zr`-Datei auszuführen:
 
 ```bash
-python3 Zyro-code/main.py Skript.zr
+python3 Zora/main.py Skript.zr
 ```
 
 ### Windows
@@ -27,13 +27,13 @@ python3 Zyro-code/main.py Skript.zr
 Interaktiven Modus starten:
 
 ```bat
-python3 Zyro-code/main.py
+python3 Zora/main.py
 ```
 
 Eine `.zr`-Datei auszuführen:
 
 ```bat
-python3 Zyro-code/main.py Skript.zr
+python3 Zora/main.py Skript.zr
 ```
 
 ## Abhängigkeiten
@@ -73,7 +73,7 @@ Leerzeile ausgeben:
 sage -n
 ```
 
-### Eine 'Zyro-code'-Datei aus dem Live-Modus ausfuehren:
+### Eine 'Zora'-Datei aus dem Live-Modus ausfuehren:
 
 ```text
 run -p Skript.zr
@@ -94,10 +94,10 @@ warte -t -ms_mode 500
 ```
 Beispiel:
 ```
-begruesung => Hallo, und willkommen in Zyro
+begruesung => Hallo, und willkommen in Zora
 sage begruesung 
 ```
-Ausgabe: Hallo, und willkommen in Zyro
+Ausgabe: Hallo, und willkommen in Zora
 
 ### Kommentar schreiben:
 
@@ -115,7 +115,7 @@ exit
 
 ```text
 > Kleines Beispielprogramm
-sage Hallo aus Zyro-code!
+sage Hallo aus Zora-code!
 sage -n
 sage -f g Das ist grün.
 warte -t 1
