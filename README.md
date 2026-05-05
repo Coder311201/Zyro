@@ -115,7 +115,7 @@ exit
 
 ```text
 > Kleines Beispielprogramm
-sage Hallo aus Zora-code!
+sage Hallo aus Zora!
 sage -n
 sage -f g Das ist grün.
 warte -t 1
