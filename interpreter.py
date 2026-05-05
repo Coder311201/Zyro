@@ -43,7 +43,9 @@ class Interpreter:
                 "  warte -t -ms_mode <millisekunden>\n"
                 "    Wartet die angegebene Anzahl Millisekunden.\n\n"
                 "  > <kommentar>\n"
-                "    Ignoriert die Zeile als Kommentar.\n"
+                "    Ignoriert die Zeile als Kommentar.\n" \
+                "<var_name> => <var_value>\n" \
+                "Definiert eine Variable mit dem angegebenen Namen und Wert."
             )
 
         elif "=>" in command_parts:
