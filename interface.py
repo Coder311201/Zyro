@@ -4,12 +4,14 @@ import sys
 
 class Interface:
     def __init__(self, debug: bool = True):
+        self.debug = debug
         self.executer = interpreter.Interpreter(debug)
-        if debug:
+        if self.debug:
             print("Interface is running")
             
     def run(self):
-        print("Interface is started")
+        if self.debug:
+            print("Interface is started")
         try:
             while True:
                 command = input(">> ")
