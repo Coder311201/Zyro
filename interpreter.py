@@ -18,67 +18,81 @@ class Interpreter:
         if not command_parts:
             return
         
-        if "+" in command_parts:
-            plus_i = command_parts.index("+")
-            if plus_i < 1 or plus_i == len(command_parts):
-                self.functions.ausgabe("Fehler!", "r")
-                print("Der Plus-Operator braucht zwei Zahlen.")
-                return
-            
-            try:
-                command_parts[plus_i - 1] = command_parts[plus_i - 1].replace(",", ".")
-                command_parts[plus_i + 1] = command_parts[plus_i + 1].replace(",", ".")
+        ops = {
+            "+": lambda a, b: a + b,
+            "-": lambda a, b: a - b,
+            "*": lambda a, b: a * b,
+            "/": lambda a, b: a / b,
+            "^": lambda a, b: a ** b
 
-                x_1 = float(command_parts[plus_i - 1])
-                x_2 = float(command_parts[plus_i + 1])
-                x_e = x_1 + x_2
-                if x_e.is_integer():
-                    x_e = int(x_e)
-                
-                x_e = str(x_e)
-                x_e = x_e.replace(".", ",")
+        }
+        p_ops = ["^", "*", "/"]
+        o_ops = [item for item in ops if item not in p_ops]
 
-                command_parts[plus_i - 1:plus_i + 2] = [x_e]
-            except ValueError:
-                self.functions.ausgabe("Fehler!", "r")
-                print("Der Plus-Operator braucht zwei Zahlen.")
-                return
+        for ops_gr in [p_ops, o_ops]:
+            for o in ops_gr:
+                if o in command_parts:
+                    o_i = command_parts.index(o)
+                    if o_i < 1 or o_i >= len(command_parts) - 1:
+                        self.functions.ausgabe("Fehler!", "r")
+                        return
+                    try:
+                        x_1 = float(command_parts[o_i - 1].replace(",", "."))
+                        x_2 = float(command_parts[o_i + 1].replace(",", "."))
+
+                        x_e = ops[o](x_1, x_2)
+
+                        if x_e.is_integer():
+                            x_e = int(x_e)
+
+                        x_e = str(x_e).replace(".", ",")
+
+                        command_parts[o_i - 1:o_i + 2] = [x_e]
+
+                    except ValueError:
+                        self.functions.ausgabe("Fehler!", "r")
+                        return
             
 
         cmd = command_parts[0]
 
         if cmd == "?hilfe" or cmd == "?":
-            if command_parts[1] == "-m":
-                print("+: Addieren")
-            else:
-                print(
-                    "Willkommen im Z-Hilfsmenü\n"
-                    "Drücke ^C zum Beenden\n\n"
-                    "Befehle:\n"
-                    "  ?hilfe oder ?\n"
-                    "    Zeigt diese Hilfe an.\n" \
-                    "  ? -m\n" \
-                    "    Zeigt Mathematik hilfe\n\n"
-                    "  sage <text>\n"
-                    "    Gibt den angegebenen Text aus.\n\n"
-                    "  sage -f <farbe> <text>\n"
-                    "    Gibt den Text farbig aus.\n"
-                    "    Farben: r = rot, g = gruen, b = blau\n\n"
-                    "  sage -n\n"
-                    "    Gibt eine Leerzeile aus.\n\n"
-                    "  run -p <datei.zr>\n"
-                    "    Fuehrt eine Z-Datei aus.\n\n"
-                    "  warte\n"
-                    "    Wartet 10 Sekunden.\n\n"
-                    "  warte -t <sekunden>\n"
-                    "    Wartet die angegebene Anzahl Sekunden.\n\n"
-                    "  warte -t -ms_mode <millisekunden>\n"
-                    "    Wartet die angegebene Anzahl Millisekunden.\n\n"
-                    "  > <kommentar>\n"
-                    "    Ignoriert die Zeile als Kommentar.\n" \
-                    "  <var_name> => <var_value>\n" \
-                    "  Definiert eine Variable mit dem angegebenen Namen und Wert."
-                )
+            if len(command_parts) >= 2:
+                if command_parts[1] == "-m":
+                    print(
+                    "+: Addieren\n" \
+                    "-: Subtrahieren\n" \
+                    "^: Potenzionieren\n" \
+                    "*: Multiplikation\n" \
+                    "/: Division")
+                return
+            print(
+                "Willkommen im Z-Hilfsmenü\n"
+                "Drücke ^C zum Beenden\n\n"
+                "Befehle:\n"
+                "  ?hilfe oder ?\n"
+                "    Zeigt diese Hilfe an.\n" 
+                "    -m: Zeigt Mathematikhilfe\n\n"
+                "  sage <text>\n"
+                "    Gibt den angegebenen Text aus.\n\n"
+                "  sage -f <farbe> <text>\n"
+                "    Gibt den Text farbig aus.\n"
+                "    Farben: r = rot, g = gruen, b = blau\n\n"
+                "  sage -n\n"
+                "    Gibt eine Leerzeile aus.\n\n"
+                "  run -p <datei.zr>\n"
+                "    Fuehrt eine Z-Datei aus.\n\n"
+                "  warte\n"
+                "    Wartet 10 Sekunden.\n\n"
+                "  warte -t <sekunden>\n"
+                "    Wartet die angegebene Anzahl Sekunden.\n\n"
+                "  warte -t -ms_mode <millisekunden>\n"
+                "    Wartet die angegebene Anzahl Millisekunden.\n\n"
+                "  > <kommentar>\n"
+                "    Ignoriert die Zeile als Kommentar.\n" 
+                "  <var_name> => <var_value>\n" 
+                "  Definiert eine Variable mit dem angegebenen Namen und Wert."
+            )
 
         elif "=>" in command_parts:
             if command_parts.index("=>") != 0:

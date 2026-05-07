@@ -45,11 +45,16 @@ pip install colorama
 
 ## Befehle
 
-Hilfe anzeigen:
+### Hilfe anzeigen:
 
 ```text
 ?hilfe
 ?
+```
+Für hilfe bei rechenzeichen:
+```
+?hilfe -m
+? -m
 ```
 
 ### Text ausgeben:
