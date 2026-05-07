@@ -22,7 +22,7 @@ class Interpreter:
 
         if cmd == "?hilfe" or cmd == "?":
             print(
-                "Willkommen im Zyro-Hilfsmenü\n"
+                "Willkommen im Z-Hilfsmenü\n"
                 "Drücke ^C zum Beenden\n\n"
                 "Befehle:\n"
                 "  ?hilfe oder ?\n"
@@ -35,7 +35,7 @@ class Interpreter:
                 "  sage -n\n"
                 "    Gibt eine Leerzeile aus.\n\n"
                 "  run -p <datei.zr>\n"
-                "    Fuehrt eine Zyro-Datei aus.\n\n"
+                "    Fuehrt eine Z-Datei aus.\n\n"
                 "  warte\n"
                 "    Wartet 10 Sekunden.\n\n"
                 "  warte -t <sekunden>\n"
