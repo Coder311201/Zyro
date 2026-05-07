@@ -93,10 +93,10 @@ warte -t -ms_mode 500
 ```
 Beispiel:
 ```
-begruesung => Hallo, und willkommen in Zyro
+begruesung => Hallo, und willkommen in Z
 sage begruesung 
 ```
-Ausgabe: Hallo, und willkommen in Zyro
+Ausgabe: Hallo, und willkommen in Z
 
 ### Kommentar schreiben:
 
@@ -120,3 +120,7 @@ sage -f g Das ist grün.
 warte -t 1
 sage Fertig.
 ```
+
+
+Copyright (C) 2026 Friedrich Opitz <br>
+Licensed under the GNU GPL v3
