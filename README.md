@@ -122,5 +122,5 @@ sage Fertig.
 ```
 
 
-Copyright (C) 2026 Friedrich Opitz <br>
+Copyright (C) 2026 Coder311201 <br>
 Licensed under the GNU GPL v3
