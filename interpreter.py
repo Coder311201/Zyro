@@ -10,9 +10,10 @@ class Interpreter:
             print("Interpreter is running")
 
     def execute(self, command: str):
-        for var in self.vars:
-            if var in command:
-                command = command.replace(var, str(self.vars.get(var, None)))
+        if not "=>" in command.split():
+            for var in self.vars:
+                if var in command:
+                    command = command.replace(var, str(self.vars.get(var, None)))
 
         command_parts = command.split()
         if not command_parts:
@@ -99,6 +100,7 @@ class Interpreter:
             if command_parts.index("=>") != 0:
                 var_name = " ".join(command_parts[: command_parts.index("=>")])
                 var_value = " ".join(command_parts[command_parts.index("=>") + 1:])
+                var_value = str(var_value)
                 self.vars[var_name] = var_value
             else:
                 self.functions.ausgabe("Ungültiger Variablename!", "r")
