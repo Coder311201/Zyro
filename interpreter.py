@@ -30,27 +30,29 @@ class Interpreter:
 
         for ops_gr in [p_ops, o_ops]:
             for o in ops_gr:
-                if o in command_parts:
-                    o_i = command_parts.index(o)
-                    if o_i < 1 or o_i >= len(command_parts) - 1:
-                        self.functions.ausgabe("Fehler!", "r")
-                        return
-                    try:
-                        x_1 = float(command_parts[o_i - 1].replace(",", "."))
-                        x_2 = float(command_parts[o_i + 1].replace(",", "."))
+                while True:
+                    if o in command_parts:
+                        o_i = command_parts.index(o)
+                        if o_i < 1 or o_i >= len(command_parts) - 1:
+                            self.functions.ausgabe("Fehler!", "r")
+                            return
+                        try:
+                            x_1 = float(command_parts[o_i - 1].replace(",", "."))
+                            x_2 = float(command_parts[o_i + 1].replace(",", "."))
 
-                        x_e = ops[o](x_1, x_2)
+                            x_e = ops[o](x_1, x_2)
 
-                        if x_e.is_integer():
-                            x_e = int(x_e)
+                            if x_e.is_integer():
+                                x_e = int(x_e)
 
-                        x_e = str(x_e).replace(".", ",")
+                            x_e = str(x_e).replace(".", ",")
 
-                        command_parts[o_i - 1:o_i + 2] = [x_e]
+                            command_parts[o_i - 1:o_i + 2] = [x_e]
 
-                    except ValueError:
-                        self.functions.ausgabe("Fehler!", "r")
-                        return
+                        except ValueError:
+                            self.functions.ausgabe("Fehler!", "r")
+                            return
+                    else: break
             
 
         cmd = command_parts[0]
