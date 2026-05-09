@@ -5,23 +5,12 @@
 Z ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
 und der Möglichkeit, `.zr`-Dateien auszuführen.
 
+## Einrichtung
+Zum Einrichten muss zuerst Python installiert werden.  
+Lade dir dann das Repository herunter und kopiere den Z-Ordner in einen beliebigen Ordner. Öffne diesen Ordner im Terminal und führe dann einen der Startbefehle aus dem Abschnitt 'Starten' aus.
+
 ## Starten
 
-### Linux
-
-Interaktiven Modus starten:
-
-```bash
-python3 Z/main.py
-```
-
-Eine `.zr`-Datei auszuführen:
-
-```bash
-python3 Z/main.py Skript.zr
-```
-
-### Windows
 
 Interaktiven Modus starten:
 
@@ -127,5 +116,5 @@ sage Fertig.
 ```
 
 
-Copyright (C) 2026 Coder311201 <br>
+Copyright © 2026 Coder311201 <br>
 Licensed under the GNU GPL v3

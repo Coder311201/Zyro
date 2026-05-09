@@ -24,7 +24,6 @@ class Interpreter:
             "*": lambda a, b: a * b,
             "/": lambda a, b: a / b,
             "^": lambda a, b: a ** b
-
         }
         p_ops = ["^", "*", "/"]
         o_ops = [item for item in ops if item not in p_ops]
