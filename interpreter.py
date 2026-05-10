@@ -6,6 +6,7 @@ class Interpreter:
     def __init__(self, debug: bool = True):
         self.functions = functions.functions(debug)
         self.vars = {}
+        self.libs = {}
         if debug:
             print("Interpreter is running")
 
