@@ -2,12 +2,12 @@
   <img src="assets/icon.png" width="300">
 </div>
 
-Z ist eine kleine eigene Programmiersprache mit einem interaktiven Modus
+Z ist eine kleine eigene Programmiersprache für Programmiersprachenanfänger mit einem interaktiven Modus
 und der Möglichkeit, `.zr`-Dateien auszuführen.
 
 ## Einrichtung
 Zum Einrichten muss zuerst Python installiert werden.  
-Lade dir dann das Repository herunter und kopiere den Z-Ordner in einen beliebigen Ordner. Öffne diesen Ordner im Terminal und führe dann einen der Startbefehle aus dem Abschnitt 'Starten' aus.
+Lade dir dann das Repository herunter und bennene den Ordner in Z um. Kopiere den Z-Ordner in einen beliebigen Ordner. Öffne diesen Ordner im Terminal und führe dann einen der Startbefehle aus dem Abschnitt 'Starten' aus.
 
 ## Starten
 
