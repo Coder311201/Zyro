@@ -15,6 +15,7 @@ class Interpreter:
     def execute(self, command: str):
         if not "=>" in command.split():
             for var in self.vars:
+                var = str(var)
                 if var in command:
                     command = command.replace(var, str(self.vars.get(var, None)))
 
