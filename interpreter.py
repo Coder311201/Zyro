@@ -1,7 +1,7 @@
 import functions
 import importlib
 import sys
-import os
+from pathlib import Path
 
 
 class Interpreter:
@@ -24,11 +24,25 @@ class Interpreter:
         
         for i, part in enumerate(command_parts):
             if part in self.libs:
+                if i + 1 >= len(command_parts):
+                    self.functions.ausgabe("Fehler!", "r")
+                    print(f"Keine Funktion fuer Bibleothek {part} genannt")
+                    return
+                if not hasattr(self.libs[part], command_parts[i + 1]):
+                    self.functions.ausgabe("Fehler!", "r")
+                    print(f"Die Funktion {command_parts[i + 1]} existiert in der Bibleothek {part} nicht")
+                    return
                 args = command_parts[i + 2:]
                 methode = getattr(self.libs[part], command_parts[i + 1])
-                out = methode(*args)
+                try:
+                    out = methode(*args)
+                except TypeError:
+                    self.functions.ausgabe("Fehler!", "r")
+                    print("Zu wenig Argumente!")
+                    return
+
                 if out == None: return
-                command_parts[i:] = [str(methode(*args))]
+                command_parts[i:] = [str(out)]
         
         ops = {
             "+": lambda a, b: a + b,
@@ -125,12 +139,9 @@ class Interpreter:
                 return
             
             bibo = str(command_parts[1])
-            dateipfad = f"./Z/Z_libs/{bibo}.py"
-            if not os.path.exists("./Z"):
-                self.functions.ausgabe("Fehler!", "r")
-                print("Z wird aus dem falschen Ordner ausgeführt")
-                return
-            elif not os.path.exists(dateipfad):
+            libs_ordner = Path(__file__).resolve().parent / "Z_libs"
+            dateipfad = libs_ordner / f"{bibo}.py"
+            if not dateipfad.exists():
                 self.functions.ausgabe("Fehler!", "r")
                 print(f"Die Bibleothek {bibo} existiert nicht!")
                 return
