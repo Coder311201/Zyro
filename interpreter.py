@@ -22,6 +22,14 @@ class Interpreter:
         if not command_parts:
             return
         
+        for i, part in enumerate(command_parts):
+            if part in self.libs:
+                args = command_parts[i + 2:]
+                methode = getattr(self.libs[part], command_parts[i + 1])
+                out = methode(*args)
+                if out == None: return
+                command_parts[i:] = [str(methode(*args))]
+        
         ops = {
             "+": lambda a, b: a + b,
             "-": lambda a, b: a - b,
@@ -65,13 +73,6 @@ class Interpreter:
 
         cmd = command_parts[0]
         
-        for i, part in enumerate(command_parts):
-            if part in self.libs:
-                args = command_parts[i + 2:]
-                methode = getattr(self.libs[part], command_parts[i + 1])
-                out = methode(*args)
-                if out == None: return
-                command_parts[i:] = [str(methode(*args))]
 
         if cmd == "?hilfe" or cmd == "?":
             if len(command_parts) >= 2:
@@ -108,7 +109,9 @@ class Interpreter:
                 "  > <kommentar>\n"
                 "    Ignoriert die Zeile als Kommentar.\n" 
                 "  <var_name> => <var_value>\n" 
-                "  Definiert eine Variable mit dem angegebenen Namen und Wert."
+                "  Definiert eine Variable mit dem angegebenen Namen und Wert.\n" 
+                "  lade <Bileothek>\n" \
+                "  Lädt eine Bibleothek"
             )
 
         elif cmd == "lade":
