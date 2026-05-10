@@ -53,6 +53,10 @@ class Interpreter:
                         except ValueError:
                             self.functions.ausgabe("Fehler!", "r")
                             return
+                        except ZeroDivisionError:
+                            self.functions.ausgabe("Fehler!", "r")
+                            print("Division durch null")
+                            return
                     else: break
             
 
