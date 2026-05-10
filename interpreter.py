@@ -1,5 +1,7 @@
 import functions
+import importlib
 import sys
+import os
 
 
 class Interpreter:
@@ -62,6 +64,14 @@ class Interpreter:
             
 
         cmd = command_parts[0]
+        
+        for i, part in enumerate(command_parts):
+            if part in self.libs:
+                args = command_parts[i + 2:]
+                methode = getattr(self.libs[part], command_parts[i + 1])
+                out = methode(*args)
+                if out == None: return
+                command_parts[i:] = [str(methode(*args))]
 
         if cmd == "?hilfe" or cmd == "?":
             if len(command_parts) >= 2:
@@ -100,6 +110,31 @@ class Interpreter:
                 "  <var_name> => <var_value>\n" 
                 "  Definiert eine Variable mit dem angegebenen Namen und Wert."
             )
+
+        elif cmd == "lade":
+            if len(command_parts) == 1:
+                self.functions.ausgabe("Fehler!", "r")
+                print("Keine Bibleothek genannt")
+                return
+            elif len(command_parts) >= 3:
+                self.functions.ausgabe("Fehler!", "r")
+                print("Nur eine Bibleothek nennen")
+                return
+            
+            bibo = str(command_parts[1])
+            dateipfad = f"./Z/Z_libs/{bibo}.py"
+            if not os.path.exists("./Z"):
+                self.functions.ausgabe("Fehler!", "r")
+                print("Z wird aus dem falschen Ordner ausgeführt")
+                return
+            elif not os.path.exists(dateipfad):
+                self.functions.ausgabe("Fehler!", "r")
+                print(f"Die Bibleothek {bibo} existiert nicht!")
+                return
+            
+            modul = importlib.import_module(f"Z_libs.{bibo}")                
+            klasse = getattr(modul, bibo)
+            self.libs[bibo] = klasse()
 
         elif "=>" in command_parts:
             if command_parts.index("=>") != 0:
