@@ -24,6 +24,70 @@ class functions:
         else:
             print(colors.get(color, "") + text + "\033[0m")
 
+    def calculate(self, command_parts):
+        ops = {
+            "+": lambda a, b: a + b,
+            "-": lambda a, b: a - b,
+            "*": lambda a, b: a * b,
+            "/": lambda a, b: a / b,
+            "^": lambda a, b: a ** b
+        }
+        p_ops = ["^", "*", "/"]
+        o_ops = [item for item in ops if item not in p_ops]
+
+        while "(" in command_parts or ")" in command_parts:
+            if ")" not in command_parts or "(" not in command_parts:
+                self.ausgabe("Fehler!", "r")
+                return None
+
+            close_i = command_parts.index(")")
+            open_i = None
+            for i in range(close_i - 1, -1, -1):
+                if command_parts[i] == "(":
+                    open_i = i
+                    break
+
+            if open_i is None or open_i + 1 == close_i:
+                self.ausgabe("Fehler!", "r")
+                return None
+
+            result = self.calculate(command_parts[open_i + 1:close_i])
+            if result is None:
+                return None
+            command_parts[open_i:close_i + 1] = result
+
+        for ops_gr in [p_ops, o_ops]:
+            for o in ops_gr:
+                while True:
+                    if o in command_parts:
+                        o_i = command_parts.index(o)
+                        if o_i < 1 or o_i >= len(command_parts) - 1:
+                            self.ausgabe("Fehler!", "r")
+                            return None
+                        try:
+                            x_1 = float(command_parts[o_i - 1].replace(",", "."))
+                            x_2 = float(command_parts[o_i + 1].replace(",", "."))
+
+                            x_e = ops[o](x_1, x_2)
+
+                            if x_e.is_integer():
+                                x_e = int(x_e)
+
+                            x_e = str(x_e).replace(".", ",")
+
+                            command_parts[o_i - 1:o_i + 2] = [x_e]
+
+                        except ValueError:
+                            self.ausgabe("Fehler!", "r")
+                            return None
+                        except ZeroDivisionError:
+                            self.ausgabe("Fehler!", "r")
+                            print("Division durch null")
+                            return None
+                    else: break
+
+        return command_parts
+
     def compile(self, dateipfad: str):
 
         if not os.path.exists(dateipfad):

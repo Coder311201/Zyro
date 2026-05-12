@@ -19,6 +19,7 @@ class Interpreter:
                 if var in command:
                     command = command.replace(var, str(self.vars.get(var, None)))
 
+        command = command.replace("(", " ( ").replace(")", " ) ")
         command_parts = command.split()
         if not command_parts:
             return
@@ -44,46 +45,11 @@ class Interpreter:
 
                 if out == None: return
                 command_parts[i:] = [str(out)]
-        
-        ops = {
-            "+": lambda a, b: a + b,
-            "-": lambda a, b: a - b,
-            "*": lambda a, b: a * b,
-            "/": lambda a, b: a / b,
-            "^": lambda a, b: a ** b
-        }
-        p_ops = ["^", "*", "/"]
-        o_ops = [item for item in ops if item not in p_ops]
-
-        for ops_gr in [p_ops, o_ops]:
-            for o in ops_gr:
-                while True:
-                    if o in command_parts:
-                        o_i = command_parts.index(o)
-                        if o_i < 1 or o_i >= len(command_parts) - 1:
-                            self.functions.ausgabe("Fehler!", "r")
-                            return
-                        try:
-                            x_1 = float(command_parts[o_i - 1].replace(",", "."))
-                            x_2 = float(command_parts[o_i + 1].replace(",", "."))
-
-                            x_e = ops[o](x_1, x_2)
-
-                            if x_e.is_integer():
-                                x_e = int(x_e)
-
-                            x_e = str(x_e).replace(".", ",")
-
-                            command_parts[o_i - 1:o_i + 2] = [x_e]
-
-                        except ValueError:
-                            self.functions.ausgabe("Fehler!", "r")
-                            return
-                        except ZeroDivisionError:
-                            self.functions.ausgabe("Fehler!", "r")
-                            print("Division durch null")
-                            return
-                    else: break
+  
+        if any(part in ["+", "-", "*", "/", "^", "(", ")"] for part in command_parts):
+            command_parts = self.functions.calculate(command_parts)
+            if command_parts is None:
+                return
             
 
         cmd = command_parts[0]
