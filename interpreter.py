@@ -13,6 +13,13 @@ class Interpreter:
             print("Interpreter is running")
 
     def execute(self, command: str):
+        if "frage" in command.split():
+            command_parts = self._functions.split_command(command)
+            o_i = command_parts.index("frage")
+            frage = " ".join(command_parts[o_i+1:]) + ": "
+            # command_parts[o_i:] = [input(frage)]
+            command = command.replace(" ".join(command_parts[o_i:]), input(frage))
+
         if not "=>" in command.split():
             for var in self._vars:
                 var = str(var)

@@ -30,9 +30,11 @@ class mathe:
         if y % 1 == 0: y = int(y)
         return y
     
+    # √
     def wurzel(self, x, We = 2):
         try:
             x = float(x)
+            We = float(We)
         except ValueError:
             self._functions.ausgabe("Fehler", "r")
             print("Bitte eine gültige Zahl übergeben")
