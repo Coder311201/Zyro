@@ -183,7 +183,7 @@ class Interpreter:
                 print("Fuehre ?hilfe oder run -h aus wenn du hilfe brauchst")
                 return
 
-        elif cmd == "exit":
+        elif cmd == "ende":
             print("Programm wird beendet.")
             sys.exit()
 

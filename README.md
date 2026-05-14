@@ -103,7 +103,7 @@ Ausgabe: Hallo, und willkommen in Z
 ### Programm beenden:
 
 ```text
-exit
+ende
 ```
 
 ## Beispiel für eine `.zr`-Datei
