@@ -6,40 +6,39 @@ from pathlib import Path
 
 class Interpreter:
     def __init__(self, debug: bool = True):
-        self.functions = functions.functions(debug)
-        self.vars = {}
-        self.libs = {}
+        self._functions = functions.functions(debug)
+        self._vars = {}
+        self._libs = {}
         if debug:
             print("Interpreter is running")
 
     def execute(self, command: str):
         if not "=>" in command.split():
-            for var in self.vars:
+            for var in self._vars:
                 var = str(var)
                 if var in command:
-                    command = command.replace(var, str(self.vars.get(var, None)))
+                    command = command.replace(var, str(self._vars.get(var, None)))
 
-        command = command.replace("(", " ( ").replace(")", " ) ")
-        command_parts = command.split()
+        command_parts = self._functions.split_command(command)
         if not command_parts:
             return
         
         for i, part in enumerate(command_parts):
-            if part in self.libs:
+            if part in self._libs:
                 if i + 1 >= len(command_parts):
-                    self.functions.ausgabe("Fehler!", "r")
+                    self._functions.ausgabe("Fehler!", "r")
                     print(f"Keine Funktion fuer Bibleothek {part} genannt")
                     return
-                if not hasattr(self.libs[part], command_parts[i + 1]):
-                    self.functions.ausgabe("Fehler!", "r")
+                if not hasattr(self._libs[part], command_parts[i + 1]):
+                    self._functions.ausgabe("Fehler!", "r")
                     print(f"Die Funktion {command_parts[i + 1]} existiert in der Bibleothek {part} nicht")
                     return
                 args = command_parts[i + 2:]
-                methode = getattr(self.libs[part], command_parts[i + 1])
+                methode = getattr(self._libs[part], command_parts[i + 1])
                 try:
                     out = methode(*args)
                 except TypeError:
-                    self.functions.ausgabe("Fehler!", "r")
+                    self._functions.ausgabe("Fehler!", "r")
                     print("Zu wenig Argumente!")
                     return
 
@@ -47,7 +46,7 @@ class Interpreter:
                 command_parts[i:] = [str(out)]
   
         if any(part in ["+", "-", "*", "/", "^", "(", ")"] for part in command_parts):
-            command_parts = self.functions.calculate(command_parts)
+            command_parts = self._functions.calculate(command_parts)
             if command_parts is None:
                 return
             
@@ -97,11 +96,11 @@ class Interpreter:
 
         elif cmd == "lade":
             if len(command_parts) == 1:
-                self.functions.ausgabe("Fehler!", "r")
+                self._functions.ausgabe("Fehler!", "r")
                 print("Keine Bibleothek genannt")
                 return
             elif len(command_parts) >= 3:
-                self.functions.ausgabe("Fehler!", "r")
+                self._functions.ausgabe("Fehler!", "r")
                 print("Nur eine Bibleothek nennen")
                 return
             
@@ -109,35 +108,35 @@ class Interpreter:
             libs_ordner = Path(__file__).resolve().parent / "Z_libs"
             dateipfad = libs_ordner / f"{bibo}.py"
             if not dateipfad.exists():
-                self.functions.ausgabe("Fehler!", "r")
+                self._functions.ausgabe("Fehler!", "r")
                 print(f"Die Bibleothek {bibo} existiert nicht!")
                 return
             
             modul = importlib.import_module(f"Z_libs.{bibo}")                
             klasse = getattr(modul, bibo)
-            self.libs[bibo] = klasse()
+            self._libs[bibo] = klasse()
 
         elif "=>" in command_parts:
             if command_parts.index("=>") != 0:
                 var_name = " ".join(command_parts[: command_parts.index("=>")])
                 var_value = " ".join(command_parts[command_parts.index("=>") + 1:])
                 var_value = str(var_value)
-                self.vars[var_name] = var_value
+                self._vars[var_name] = var_value
             else:
-                self.functions.ausgabe("Ungültiger Variablename!", "r")
+                self._functions.ausgabe("Ungültiger Variablename!", "r")
 
         elif cmd == "sage":
             if len(command_parts) < 2:
-                self.functions.ausgabe("Keine Argumente!", "r")
+                self._functions.ausgabe("Keine Argumente!", "r")
                 print("Fuehre ?hilfe oder sage -h aus wenn du hilfe brauchst")
                 return
             if command_parts[1] == "-f":
                 if len(command_parts) < 4:
-                    self.functions.ausgabe("Keine Farbe oder Text!", "r")
+                    self._functions.ausgabe("Keine Farbe oder Text!", "r")
                     print("Fuehre ?hilfe oder sage -h aus wenn du hilfe brauchst")
                     return
                 text = " ".join(command_parts[3:])
-                self.functions.ausgabe(text, command_parts[2])
+                self._functions.ausgabe(text, command_parts[2])
             elif command_parts[1] == "-h":
                 print(
                     "Hilfe fuer sage\n"
@@ -156,20 +155,20 @@ class Interpreter:
 
             else:
                 text = " ".join(command_parts[1:])
-                self.functions.ausgabe(text, "w")
+                self._functions.ausgabe(text, "w")
 
         elif cmd == "run":
             if len(command_parts) < 2:
-                self.functions.ausgabe("Keine Argumente!", "r")
+                self._functions.ausgabe("Keine Argumente!", "r")
                 print("Fuehre ?hilfe oder run -h aus wenn du hilfe brauchst")
                 return
 
             if command_parts[1] == "-p":
                 if len(command_parts) < 3:
-                    self.functions.ausgabe("Kein Pfad angegeben!", "r")
+                    self._functions.ausgabe("Kein Pfad angegeben!", "r")
                     print("Fuehre ?hilfe oder run -h aus wenn du hilfe brauchst")
                     return
-                self.functions.compile(command_parts[2])
+                self._functions.compile(command_parts[2])
             elif command_parts[1] == "-h":
                 print(
                     "Hilfe fuer run\n"
@@ -180,7 +179,7 @@ class Interpreter:
                 )
 
             else:
-                self.functions.ausgabe("Keine Argumente!", "r")
+                self._functions.ausgabe("Keine Argumente!", "r")
                 print("Fuehre ?hilfe oder run -h aus wenn du hilfe brauchst")
                 return
 
@@ -194,7 +193,7 @@ class Interpreter:
         elif cmd == "warte":
             try:
                 if len(command_parts) < 2:
-                    self.functions.wait(10, False)
+                    self._functions.wait(10, False)
                 elif command_parts[1] == "-h":
                     print(
                         "Hilfe fuer warte\n"
@@ -213,28 +212,28 @@ class Interpreter:
                     if len(command_parts) < 3 and (
                         True if not mi else False if len(command_parts) < 4 else True
                     ):
-                        self.functions.ausgabe("Keine Argumente!", "r")
+                        self._functions.ausgabe("Keine Argumente!", "r")
                         print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
                         return
                     elif int(command_parts[3] if mi else command_parts[2]) <= 0:
-                        self.functions.ausgabe(
+                        self._functions.ausgabe(
                             "Bitte gültige positive Ganzzahl eingeben!", "r"
                         )
                         print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
                         return
 
-                    self.functions.wait(
+                    self._functions.wait(
                         int(command_parts[3] if mi else command_parts[2]), mi
                     )
                 else:
-                    self.functions.ausgabe("Falsche Argumente!", "r")
+                    self._functions.ausgabe("Falsche Argumente!", "r")
                     print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
                     return
             except IndexError:
-                self.functions.ausgabe("Keine Argumente!", "r")
+                self._functions.ausgabe("Keine Argumente!", "r")
                 print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
             except ValueError:
-                self.functions.ausgabe("Bitte gültige positive Ganzzahl eingeben!", "r")
+                self._functions.ausgabe("Bitte gültige positive Ganzzahl eingeben!", "r")
                 print("Fuehre ?hilfe oder warte -h aus wenn du hilfe brauchst")
 
         else:

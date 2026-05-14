@@ -24,6 +24,30 @@ class functions:
         else:
             print(colors.get(color, "") + text + "\033[0m")
 
+    def split_command(self, command: str):
+        for operator in ["(", ")", "+", "*", "^", "/"]:
+            command = command.replace(operator, f" {operator} ")
+
+        parts = []
+        for part in command.split():
+            if "-" not in part or part.startswith("-"):
+                parts.append(part)
+                continue
+
+            current = ""
+            for char in part:
+                if char == "-":
+                    if current:
+                        parts.append(current)
+                    parts.append("-")
+                    current = ""
+                else:
+                    current += char
+            if current:
+                parts.append(current)
+
+        return parts
+
     def calculate(self, command_parts):
         ops = {
             "+": lambda a, b: a + b,

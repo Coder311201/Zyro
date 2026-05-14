@@ -7,10 +7,10 @@ class main_app:
         print('Gebe "?hilfe" oder ? ein wenn du hilfe brauchst')
         print("Copyright © 2026 Coder311201\n" \
         "Licensed under the GNU GPL v3")
-        self.Interface = interface.Interface(False)
+        self._Interface = interface.Interface(False)
 
     def main(self):
-        self.Interface.run()
+        self._Interface.run()
 
 
 if __name__ == "__main__":

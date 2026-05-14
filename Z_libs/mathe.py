@@ -3,7 +3,7 @@ import functions
 
 class mathe:
     def __init__(self):
-        self.functions = functions.functions(False)
+        self._functions = functions.functions(False)
 
     def pi(self):
         return math.pi
@@ -12,7 +12,7 @@ class mathe:
         try:
             x = float(x)
         except ValueError:
-            self.functions.ausgabe("Fehler", "r")
+            self._functions.ausgabe("Fehler", "r")
             print("Bitte eine gültige Zahl übergeben")
             return
         y = math.sin(x)
@@ -23,7 +23,7 @@ class mathe:
         try:
             x = float(x)
         except ValueError:
-            self.functions.ausgabe("Fehler", "r")
+            self._functions.ausgabe("Fehler", "r")
             print("Bitte eine gültige Zahl übergeben")
             return
         y = math.cos(x)
@@ -34,7 +34,7 @@ class mathe:
         try:
             x = float(x)
         except ValueError:
-            self.functions.ausgabe("Fehler", "r")
+            self._functions.ausgabe("Fehler", "r")
             print("Bitte eine gültige Zahl übergeben")
             return
         y = x ** (1 / We)
